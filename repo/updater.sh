@@ -19,16 +19,17 @@ function aarch_err_(){
   exit
 }
 
-function rebuild_tuffix(){
+function rebuild_tuffix() {
     [[ "$(uname -v | grep -i "ubuntu")" ]] || aarch_err_
+
+    TEST_DIR="/tmp/tuffix"
 
     echo "[INFO] Rebuilding the Tuffix installer"
 
-    [[ -d /tmp/tuffix ]] && rm -rf /tmp/tuffix
+    [[ -d "$TEST_DIR" ]] && rm -rf "$TEST_DIR"
 
-    cd /tmp
-    git clone https://github.com/mshafae/tuffix
-    cd tuffix
+    git clone https://github.com/mshafae/tuffix "$TEST_DIR"
+    cd "$TEST_DIR"
     git checkout "releasebuild"
 
     PKG_BASE="TuffixInstaller"
@@ -37,19 +38,46 @@ function rebuild_tuffix(){
 
     [[ ! -d "$PKG_BASE" ]] && dir_dne "$PKG_BASE"
 
-    PKG_REVISION="$(awk '/Version:/ {print $2}' "$PKG_BASE"/DEBIAN/control | cut -d "-" -f1)"
-    CURRENT_VERSION="$(awk '/Version:/ {print $2}' "$PKG_BASE"/DEBIAN/control | cut -d "-" -f2)"
-    NEW_VERSION=$((CURRENT_VERSION+1))
+    _pkg_regex="([0-9]+\.[0-9]+)\_([0-9])"
+    find "$HOME_DIR"/amd64/ -type f -name '*.deb' | tail -n1 | while read line; do 
+        base_="$(basename "$line")"
+        if [[ "$base_" =~ $_pkg_regex ]]; then
+            # NOTE : whatever is the latest entry in our database
+            LATEST_PKG_VERSION="${BASH_REMATCH[0]}"; LATEST_PKG_REVISION="${BASH_REMATCH[1]}"
+        else
+            # otherwise, we are just starting
+            LATEST_PKG_VERSION="1.0"; LATEST_PKG_REVISION="0"
+        fi
+    done
 
-    sed -i "s/Version: .*/Version: $PKG_REVISION-$NEW_VERSION/" "$PKG_BASE"/DEBIAN/control
+    _pkg_version_regex="Version:\s+([0-9]+\.[0-9]+)\-([0-9]+)"
+    control_contents="$(cat "$PKG_BASE"/DEBIAN/control)"
+
+    if [[ "$control_contents" =~ "$_pkg_version_regex" ]]; then
+        CURRENT_PKG_VERSION="${BASH_REMATCH[0]}"; CURRENT_PKG_REVISION="${BASH_REMATCH[1]}"
+    fi
+
+    if [[ "$LATEST_PKG_REVISION" -eq "$CURRENT_PKG_REVISION" ]]; then
+        echo "[INFO] No need to proceed further, git version renders $CURRENT_PKG_REVISION and database provides $LATEST_PKG_REVISION. Please update git version if you intended to update PPA"
+        exit
+    fi
+
+    #PKG_REVISION="$(awk '/Version:/ {print $2}' "$PKG_BASE"/DEBIAN/control | cut -d "-" -f1)"
+    #CURRENT_VERSION="$(awk '/Version:/ {print $2}' "$PKG_BASE"/DEBIAN/control | cut -d "-" -f2)"
+    # NEW_VERSION=$((CURRENT_VERSION+1))
+    
+    DEB_OUTPUT="$BUILD_DIR"/"$PKG_NAME"_"$CURRENT_PKG_VERSION"_"$CURRENT_PKG_REVISION"_"$PKG_ARCH".deb
+
+    sed -i "s/Version: .*/Version: $CURRENT_PKG_VERSION-$CURRENT_PKG_REVISION/" "$PKG_BASE"/DEBIAN/control
 
     find "$PKG_BASE" -type f -not -path "*DEBIAN*" -exec chmod 755 {} \;
 
-    echo "[+] Updated TuffixInstaller from version $CURRENT_VERSION to $NEW_VERSION"
+    echo "[+] Updated TuffixInstaller from revision $LATEST_PKG_REVISION to $CURRENT_PKG_REVISION"
 
-    dpkg-deb --build "$PKG_BASE" "$BUILD_DIR"/"$PKG_NAME"_"$PKG_REVISION"_"$NEW_VERSION"_"$PKG_ARCH".deb
+    dpkg-deb --build "$PKG_BASE" "$DEB_OUTPUT"
 
 }
+
 
 # echo "deb http://$(hostname -I)/repo /"
 
