@@ -16,6 +16,7 @@ AUTHOR: Christopher Nutter
 	
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <title>Tuffix Homepage</title>
 </head>
 
 <body>
@@ -48,7 +49,6 @@ AUTHOR: Christopher Nutter
                 <?php include 'php_includes/retriever.php';?>
                 <?php echo get_latest_version(); ?>
             </button>
-            &nbsp;
             &nbsp;
             &nbsp;
             &nbsp;
