@@ -47,7 +47,6 @@ AUTHOR: Christopher Nutter
 			<button class="btn-primary btn-lg dl-button">
                 <?php include 'php_includes/retriever.php';?>
                 <?php echo get_latest_version(); ?>
-                <a class="no-underline" href="$latest">Download</a>
             </button>
 			<button class="btn-primary btn-lg dl-button">
                 <a class="no-underline" href="repo/amd64/builds/">Previous Builds</a>
