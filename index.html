@@ -46,7 +46,9 @@ AUTHOR: Christopher Nutter
 				<br>
 			<button class="btn-primary btn-lg dl-button">
                 <!--needs to be done via php to find the latest build (natsort and pick last element)-->
-				<a class="no-underline" href="repo/amd64/builds/Tuffix_1.0_2_x86_64.deb">Download</a>
+				<!--<a class="no-underline" href="repo/amd64/builds/Tuffix_1.0_2_x86_64.deb">Download</a>-->
+                <?php include 'retriever.php';?>
+				<a class="no-underline" href="<?php get_latest_version() ?>">Download</a>
 			</button>
 		</div>
 	</center>
