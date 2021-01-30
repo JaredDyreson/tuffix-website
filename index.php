@@ -23,9 +23,9 @@ AUTHOR: Christopher Nutter
 		<br>
 	<div class="tab no-bullets">
 		<center>
-			<button><a href="https://github.com/mshafae/tuffix/wiki">About</a></button>
 			<button class="invoke-contributors" data-toggle="modal" data-target="#AboutDialog" href="index.html#">Contributors</button>
 			<button><a href="https://github.com/mshafae/tuffix/tree/TuffixLib">Source Code</a></button>
+			<button><a href="https://github.com/mshafae/tuffix/wiki">Wiki</a></button>
             <!--not sure if we need this link to the school's website-->
 			<!--<button><a href="http://www.fullerton.edu/">CSUF Website</a></button>-->
 		<center>
@@ -39,20 +39,49 @@ AUTHOR: Christopher Nutter
 				<br><br>
 			<img src="assets/tuffix-animation.gif" alt="tuffix animation" style="filter: invert(0.75);"  width=300/>
 				<br><br>
-			<p>
-				Lorem ipsum dolor sit amet, consectetaur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-			<br><br>
-				Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?
-			</p>
-				<br>
-			<button class="btn-primary btn-lg dl-button">
+            <p style="font-size: 20px">
+            The key goal of this effort is to have a unified programming
+            environment for our <br> 
+            introductory courses that is accessible, fosters
+            collaboration, and enables students and <br>
+            instructors to share working
+            code with one another.</p>
+
+            <h2><b>Major Components</b></h2>
+            <hr style="width: 32%">
+            <ul id="menu" class="no-bullets">
+                <li><a href="http://www.releases.ubuntu.com/20.04/">Ubuntu 20.04</a></li>
+                &nbsp; | &nbsp;
+                <li><a href="https://clang.llvm.org/">Clang Compiler</a></li>
+                &nbsp; | &nbsp;
+                <li><a href="https://gcc.gnu.org/">GNU C++ Compiler</a></li>
+                &nbsp; | &nbsp;
+                <li><a href="https://atom.io/docs">Atom Text Editor</a></li>
+                &nbsp; | &nbsp;
+                <li><a href="https://www.gnu.org/software/gdb/">GDB Debugger</a></li>
+                &nbsp; | &nbsp;
+                <li><a href="https://atom.io/packages/dbg-gdb">Atom's DGB-GDB Front End</a></li>
+            </ul>
+            Additional tools and libraries are also included to support rich
+            programming assignments, and courses aside from 120-121-131.
+            </p>
+
+            <br>
+            <button class="btn-primary btn-lg dl-button">
+                <i class="fa fa-download" aria-hidden="true"></i>
                 <?php include 'php_includes/retriever.php';?>
                 <?php echo get_latest_version(); ?>
             </button>
+
+			<!--<button class="btn-primary btn-lg dl-button">-->
+                <!--<i class="fa fa-download" aria-hidden="true"></i>-->
+                <!--<a class="no-underline" href="repo/amd64/builds/">Download</a>-->
+            <!--</button>-->
             &nbsp;
             &nbsp;
             &nbsp;
 			<button class="btn-primary btn-lg dl-button">
+                <i class="fa fa-archive" aria-hidden="true"></i>
                 <a class="no-underline" href="repo/amd64/builds/">Previous Builds</a>
             </button>
             <br/>
